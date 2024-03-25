@@ -1,4 +1,6 @@
-﻿namespace NET_Project.Server.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace NET_Project.Server.Entities
 {
     public class SuperHero
     {

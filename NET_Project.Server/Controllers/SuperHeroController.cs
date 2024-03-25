@@ -43,5 +43,35 @@ namespace NET_Project.Server.Controllers
 
             return Ok(await _context.SuperHeroes.ToListAsync());
         }
+        
+        [HttpPut]
+        public async Task<ActionResult<List<SuperHero>>> UpdateHero(SuperHero hero)
+        {
+            var dbHero = await _context.SuperHeroes.FindAsync(hero.Id);
+            if (dbHero is null)
+                return NotFound("Hero not found.");
+
+            dbHero.Name = hero.Name;
+            dbHero.FirstName = hero.FirstName;
+            dbHero.LastName = hero.LastName;
+            dbHero.Place = hero.Place;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<List<SuperHero>>> DeleteHero(int id)
+        {
+            var dbHero = await _context.SuperHeroes.FindAsync(id);
+            if (dbHero is null)
+                return NotFound("Hero not found.");
+
+            _context.SuperHeroes.Remove(dbHero);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
+        }
     }
 }
